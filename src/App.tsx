@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Header from './components/header';
+import Login from './pages';
+import dashboard from './pages/dashboard';
+import { useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function App() {
+  const history = useHistory();
+  const location = useLocation();
+  const token = Cookies.get('token');
+
+  useEffect(() => {
+    getData();
+  }, [location.pathname]);
+
+  const getData = async () => {
+    try {
+      if (!token) {
+        return history.push('/');
+      }
+    } catch (e) {
+      Cookies.remove('token');
+    }
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Route>
+      {token && <Header />}
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/dashboard" component={dashboard} />
+      </Switch>
+    </Route>
   );
 }
 
