@@ -5,9 +5,9 @@ export default function Header() {
         name: string;
     }
     const [menu, setMenu] = useState<Menu[]>([
-        { link: '/top', name: 'Top Up' },
-        { link: '', name: 'Transaction' },
-        { link: '', name: 'Akun' },
+        { link: '/topup', name: 'Top Up' },
+        { link: '/transacton', name: 'Transaction' },
+        { link: '/account', name: 'Akun' },
     ]);
     return (
         <header className="w-full  py-4 border-b ">

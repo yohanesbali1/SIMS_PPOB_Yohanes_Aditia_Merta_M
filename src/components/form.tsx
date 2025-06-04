@@ -7,3 +7,9 @@ export function FormInput({ register, errors, className = "", ...comp }: any) {
      ${errors ? " border-red-500 focus:ring-red-500 focus:border-red-500" : "border-gray-200 focus:ring-blue-500 focus:border-blue-500"}`} />
     );
 }
+
+export function FormLabel({ children }: any) {
+    return (
+        <label className="block mb-2 text-sm font-medium text-gray-900">{children}</label>
+    )
+}

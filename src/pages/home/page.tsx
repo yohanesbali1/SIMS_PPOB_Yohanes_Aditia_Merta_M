@@ -5,24 +5,25 @@ import { Pagination } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import Layout_1 from '../components/layput/layput_1';
+import Layout_1 from '../../components/layput/layput_1';
+import MenuDashboard from './menu';
 
 export default function Dashboard() {
 
-    const menus = [
-        { name: "PBB", color: "bg-[#E6F4EC]", link: "/pbb", icon: "🏠" },
-        { name: "Listrik", color: "bg-[#FFF3E0]", link: "/listrik", icon: "⚡" },
-        { name: "Pulsa", color: "bg-[#EDEDED]", link: "/pulsa", icon: "📱" },
-        { name: "PDAM", color: "bg-[#EDF1FE]", link: "/pdam", icon: "🚰" },
-        { name: "PGN", color: "bg-[#FFF0EC]", link: "/pgn", icon: "🔥" },
-        { name: "TV Langganan", color: "bg-[#F2EDFF]", link: "/tv", icon: "📺" },
-        { name: "Musik", color: "bg-[#FBEDFF]", link: "/musik", icon: "🎵" },
-        { name: "Voucher Game", color: "bg-[#EBFAD9]", link: "/game", icon: "🎮" },
-        { name: "Voucher Makanan", color: "bg-[#EFF6FE]", link: "/makanan", icon: "🍔" },
-        { name: "Kurban", color: "bg-[#F4F4F4]", link: "/kurban", icon: "🐄" },
-        { name: "Zakat", color: "bg-[#ECFFF3]", link: "/zakat", icon: "🕌" },
-        { name: "Paket Data", color: "bg-[#EBFBFF]", link: "/paket-data", icon: "📶" },
-    ];
+    // const menus = [
+    //     { name: "PBB", color: "bg-[#E6F4EC]", link: "/pbb", icon: "🏠" },
+    //     { name: "Listrik", color: "bg-[#FFF3E0]", link: "/listrik", icon: "⚡" },
+    //     { name: "Pulsa", color: "bg-[#EDEDED]", link: "/pulsa", icon: "📱" },
+    //     { name: "PDAM", color: "bg-[#EDF1FE]", link: "/pdam", icon: "🚰" },
+    //     { name: "PGN", color: "bg-[#FFF0EC]", link: "/pgn", icon: "🔥" },
+    //     { name: "TV Langganan", color: "bg-[#F2EDFF]", link: "/tv", icon: "📺" },
+    //     { name: "Musik", color: "bg-[#FBEDFF]", link: "/musik", icon: "🎵" },
+    //     { name: "Voucher Game", color: "bg-[#EBFAD9]", link: "/game", icon: "🎮" },
+    //     { name: "Voucher Makanan", color: "bg-[#EFF6FE]", link: "/makanan", icon: "🍔" },
+    //     { name: "Kurban", color: "bg-[#F4F4F4]", link: "/kurban", icon: "🐄" },
+    //     { name: "Zakat", color: "bg-[#ECFFF3]", link: "/zakat", icon: "🕌" },
+    //     { name: "Paket Data", color: "bg-[#EBFBFF]", link: "/paket-data", icon: "📶" },
+    // ];
     const promos = [
         {
             title: "Saldo Gratis!",
@@ -58,21 +59,7 @@ export default function Dashboard() {
     return (
         <div>
             <Layout_1>
-                <div className="w-full max-w-7xl mx-auto mt-16">
-                    <div className="flex gap-4 p-4 flex-wrap">
-                        {menus.map((menu) => (
-                            <a key={menu.name}
-                                href={menu.link} className=" w-20 h-20">
-                                <div
-                                    className={`  flex flex-col items-center justify-center rounded-xl p-4 ${menu.color} hover:scale-105 transition-transform shadow`}
-                                >
-                                    <div className="text-2xl w-10 h-10 m-auto flex items-center justify-center">{menu.icon}</div>
-                                </div>
-                                <p className="mt-2 text-sm font-regular text-gray-800 text-center">{menu.name}</p>
-                            </a>
-                        ))}
-                    </div>
-                </div>
+                <MenuDashboard />
                 <div className="w-full mx-auto mt-16 ">
                     <div className='w-full max-w-7xl mx-auto  mb-4 '>
                         <h6 className="font-semibold">Temukan Promo Menarik</h6>

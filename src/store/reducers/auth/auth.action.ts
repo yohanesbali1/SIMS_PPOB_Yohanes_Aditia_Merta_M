@@ -26,3 +26,12 @@ export const profileData = () => async (dispatch: Dispatch<any>) => {
         throw e.response;
     }
 }
+export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any>) => {
+    try {
+        await apiClient().post(`/profile/update`, payload);
+        dispatch(profileData());
+        return true;
+    } catch (e: any) {
+        throw e.response;
+    }
+}
