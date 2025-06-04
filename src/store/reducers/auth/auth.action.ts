@@ -10,6 +10,14 @@ export const loginData = (payload: any) => async (dispatch: Dispatch<any>) => {
         throw e.response;
     }
 }
+export const registerData = (payload: any) => async (dispatch: Dispatch<any>) => {
+    try {
+        await apiClient().post(`/registration`, payload);
+        return true;
+    } catch (e: any) {
+        throw e.response;
+    }
+}
 export const profileData = () => async (dispatch: Dispatch<any>) => {
     try {
         const response = await apiClient().get(`/profile`);
