@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { menuService } from "../../store/reducers/serives/service.action";
+import { Link } from "react-router-dom";
 
 export default function MenuDashboard() {
     const dispatch = useDispatch<any>();
@@ -18,15 +19,15 @@ export default function MenuDashboard() {
         <div className="w-full max-w-7xl mx-auto mt-16">
             <div className="flex gap-6  flex-wrap">
                 {menu_service.map((menu: any) => (
-                    <a key={menu.name}
-                        href={`/${menu.service_code}`} className="  w-20 " >
+                    <Link key={menu.name}
+                        to={`/${menu.service_code}`} className="  w-20 " >
                         <div
                             className={`  flex flex-col items-center justify-center   ${menu.color} `}
                         >
                             <div className="text-2xl  m-auto flex items-center justify-center"><img src={menu.service_icon} alt={menu.service_name} className="w-full h-full" /></div>
                         </div>
                         <p className="mt-2 text-xs font-regular text-gray-800 text-center">{menu.service_name}</p>
-                    </a>
+                    </Link>
                 ))}
             </div>
         </div>

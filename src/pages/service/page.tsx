@@ -26,7 +26,6 @@ export default function Service() {
             await dispatch(menuService());
         } catch (e: any) {
             // throw e.response;
-        } finally {
         }
     }
 

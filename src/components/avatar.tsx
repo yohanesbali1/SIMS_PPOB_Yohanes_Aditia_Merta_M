@@ -58,9 +58,12 @@ export default function Avatar() {
                         }}
                     />
                 </div>
-                <div onClick={handleUploadClick} className="absolute right-0 bottom-3 cursor-pointer w-8 h-8 bg-white rounded-full flex items-center justify-center border border-gray-100">
-                    <i className="fa fa-pen text-sm"></i>
-                </div>
+                {
+                    isAccountRoute &&
+                    <div onClick={handleUploadClick} className="absolute right-0 bottom-3 cursor-pointer w-8 h-8 bg-white rounded-full flex items-center justify-center border border-gray-100">
+                        <i className="fa fa-pen text-sm"></i>
+                    </div>
+                }
                 <input
                     key="file-input" // helps React reinitialize if needed
                     type="file"

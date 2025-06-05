@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { profileUpdateData } from "../../store/reducers/auth/auth.action";
 import { useEffect, useState } from "react";
+import { useModalAlert } from "../../hook/useModalAlert";
+import ModalAlert from "../../components/modal";
 
 interface updateProfileForm {
     first_name: string;
@@ -17,6 +19,15 @@ export default function FormAccount(payload: any) {
     const dispatch = useDispatch<any>();
     const history = useHistory();
     const [busy, setBusy] = useState(false);
+    const {
+        modal,
+        showConfirm,
+        showLoading,
+        showResult,
+        closeModal,
+        confirmModal,
+    } = useModalAlert();
+
 
     const schema = yup.object().shape({
         first_name: yup.string().required('nama depan wajib diisi'),
@@ -36,47 +47,66 @@ export default function FormAccount(payload: any) {
     const onSubmit = async (data: updateProfileForm) => {
         try {
             setBusy(true);
+            showLoading('Processing update profile', 'Please wait...');
             await dispatch(profileUpdateData(data));
+            await showResult('success', 'Perubahan Data Diri', 'Data Diri', 'Close');
             setBusy(false);
             setCanEdit(false);
         } catch (e: any) {
             setBusy(false);
-            return false
+            showResult('error', 'Top-up Failed', e.message);
         }
     }
     return (
-        <div className="w-full max-w-4xl mx-auto mt-10">
-            <form action="" autoCapitalize="off" autoComplete="off" id="account" >
-                <div>
-                    <FormLabel htmlFor="email">Email</FormLabel>
-                    <FormInput value={data_user?.email ?? ""} disabled readOnly type="email" placeholder="masukan email anda" />
-                </div>
-                <div className="mt-3">
-                    <FormLabel htmlFor="first_name">First Name</FormLabel>
-                    <FormInput disabled={!can_edit || busy} id="first_name" register={register("first_name")} type="text" errors={errors?.first_name} placeholder="masukan nama depan" />
-                </div>
-                <div className="mt-3">
-                    <FormLabel htmlFor="last_name">Last Name</FormLabel>
-                    <FormInput disabled={!can_edit || busy} id="last_name" register={register("last_name")} type="text" errors={errors?.last_name} placeholder="masukan nama belakang" />
-                </div>
+        <>
 
-            </form>
-            <div className="mt-7">
-                {
-                    can_edit ? (
-                        <>
-                            <button disabled={busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white py-3 px-4 rounded-sm w-full font-semibold">Simpan</button>
-                            <button disabled={busy} onClick={() => setCanEdit(false)} className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold mt-5">Batal</button>
-                        </>
-                    )
-                        : <button
-                            onClick={() => setCanEdit(true)}
-                            className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold"
-                        >
-                            Edit Profil
-                        </button>
-                }
+            <div className="w-full max-w-4xl mx-auto mt-10">
+                <form action="" autoCapitalize="off" autoComplete="off" id="account" >
+                    <div>
+                        <FormLabel htmlFor="email">Email</FormLabel>
+                        <FormInput value={data_user?.email ?? ""} disabled readOnly type="email" placeholder="masukan email anda" />
+                    </div>
+                    <div className="mt-3">
+                        <FormLabel htmlFor="first_name">First Name</FormLabel>
+                        <FormInput disabled={!can_edit || busy} id="first_name" register={register("first_name")} type="text" errors={errors?.first_name} placeholder="masukan nama depan" />
+                    </div>
+                    <div className="mt-3">
+                        <FormLabel htmlFor="last_name">Last Name</FormLabel>
+                        <FormInput disabled={!can_edit || busy} id="last_name" register={register("last_name")} type="text" errors={errors?.last_name} placeholder="masukan nama belakang" />
+                    </div>
+
+                </form>
+                <div className="mt-7">
+                    {
+                        can_edit ? (
+                            <>
+                                <button disabled={busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white py-3 px-4 rounded-sm w-full font-semibold">Simpan</button>
+                                <button disabled={busy} onClick={() => setCanEdit(false)} className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold mt-5">Batal</button>
+                            </>
+                        )
+                            : <button
+                                onClick={() => setCanEdit(true)}
+                                className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold"
+                            >
+                                Edit Profil
+                            </button>
+                    }
+                </div>
             </div>
-        </div>
+            {modal && (
+                <ModalAlert
+                    isOpen={!!modal}
+                    onClose={closeModal}
+                    onConfirm={confirmModal}
+                    type={modal.type}
+                    title={modal.title}
+                    message={modal.message}
+                    confirmText={modal.confirmText}
+                    cancelText={modal.cancelText}
+                    style_message={"hidden  "}
+                    style_title={"text-xl font-semibold"}
+                />
+            )}
+        </>
     )
 }

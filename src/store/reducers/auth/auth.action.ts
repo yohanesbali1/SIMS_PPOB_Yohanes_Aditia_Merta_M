@@ -15,7 +15,7 @@ export const registerData = (payload: any) => async (dispatch: Dispatch<any>) =>
         await apiClient().post(`/registration`, payload);
         return true;
     } catch (e: any) {
-        throw e.response;
+        throw e.response.data;
     }
 }
 export const profileData = () => async (dispatch: Dispatch<any>) => {
@@ -23,7 +23,7 @@ export const profileData = () => async (dispatch: Dispatch<any>) => {
         const response = await apiClient().get(`/profile`);
         dispatch({ type: types.PROFILE_DATA, payload: response.data.data });
     } catch (e: any) {
-        throw e.response;
+        throw e.response.data;
     }
 }
 export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any>) => {
@@ -32,7 +32,7 @@ export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any
         dispatch(profileData());
         return true;
     } catch (e: any) {
-        throw e.response;
+        throw e.response.data;
     }
 }
 export const profileUpdateImage = (payload: any) => async (dispatch: Dispatch<any>) => {
@@ -45,6 +45,6 @@ export const profileUpdateImage = (payload: any) => async (dispatch: Dispatch<an
         dispatch(profileData());
         return true;
     } catch (e: any) {
-        throw e.response;
+        throw e.response.data;
     }
 }
