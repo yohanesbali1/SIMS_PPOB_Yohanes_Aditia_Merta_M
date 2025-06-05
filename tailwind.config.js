@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
       "2xl": { max: "1366px" },
@@ -13,10 +11,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary": "#f42619",
-      }
+        primary: "#f42619",
+      },
+      backgroundImage: {
+        "cover-login": "url('./assets/i-login.png')",
+      },
     },
   },
   plugins: [],
-}
-
+};
