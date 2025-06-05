@@ -8,7 +8,7 @@ export const authReducers = (state = initialState, action: any) => {
             Cookies.set('token', action.payload.token);
             return { ...state, token: action.payload.token };
         case types.PROFILE_DATA:
-            return { ...state, token: action.payload.token };
+            return { ...state, data_user: action.payload };
         default:
             return state;
     }

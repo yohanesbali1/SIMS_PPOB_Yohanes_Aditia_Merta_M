@@ -1,3 +1,4 @@
 export default {
-    menu_service: []
+    menu_service: [],
+    banner_service: [],
 }

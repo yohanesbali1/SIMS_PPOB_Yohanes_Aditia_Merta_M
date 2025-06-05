@@ -26,3 +26,12 @@ export const transactionData = (payload: any) => async (dispatch: Dispatch<any>)
         throw e.response;
     }
 }
+
+export const balanceData = () => async (dispatch: Dispatch<any>) => {
+    try {
+        const response = await apiClient().get(`/balance`);
+        dispatch({ type: types.BALANCE_DATA, payload: response.data.data });
+    } catch (e: any) {
+        throw e.response;
+    }
+}

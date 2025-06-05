@@ -1,20 +1,27 @@
+import { useSelector } from "react-redux";
+import Avatar from "../avatar";
+import { useEffect, useState } from "react";
+import Wallet from "../wallet";
+
 export default function Layout_1({ children }: any) {
+
+    const { data_user } = useSelector((state: any) => state.auth);
+    const [name, set_name] = useState<any>('-');
+
+    useEffect(() => {
+        if (data_user) set_name(`${data_user.first_name} ${data_user.last_name}`);
+    }, [data_user])
+
     return (
         <div>
             <div className="flex justify-between items-center w-full max-w-7xl mx-auto mt-16">
                 <div className="flex-1">
-                    <p className="text-lg">Selamat Datang,</p>
-                    <h5 className="text-2xl font-semibold">Kristantio Wibowo</h5>
+                    <Avatar />
+                    <p className="text-lg mt-4">Selamat Datang,</p>
+                    <h5 className="text-2xl font-semibold">{name}</h5>
                 </div>
                 <div className="flex-1">
-                    <div className="bg-primary rounded-xl w-full px-8 py-6 text-white">
-                        <p className="mb-4">Saldo anda</p>
-                        <h6 className="text-3xl mb-4 font-semibold">Rp 100.000</h6>
-                        <div className="flex text-xs items-center">
-                            <div>Lihat Saldo</div>
-                            <span></span>
-                        </div>
-                    </div>
+                    <Wallet />
                 </div>
             </div>
             <div>{children}</div>

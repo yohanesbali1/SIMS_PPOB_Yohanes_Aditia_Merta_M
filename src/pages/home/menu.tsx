@@ -16,10 +16,10 @@ export default function MenuDashboard() {
 
     return (
         <div className="w-full max-w-7xl mx-auto mt-16">
-            <div className="flex gap-6 p-4 flex-wrap">
+            <div className="flex gap-6  flex-wrap">
                 {menu_service.map((menu: any) => (
                     <a key={menu.name}
-                        href={`/${menu.service_code}`} className=" mx-auto w-20 " >
+                        href={`/${menu.service_code}`} className="  w-20 " >
                         <div
                             className={`  flex flex-col items-center justify-center   ${menu.color} `}
                         >

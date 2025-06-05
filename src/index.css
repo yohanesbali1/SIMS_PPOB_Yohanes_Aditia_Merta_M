@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
     font-family: "Inter", sans-serif;
     background-color: #FFFFFF;
     color: #322e2e;
+}
+
+
+.scroll-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }

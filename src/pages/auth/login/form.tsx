@@ -36,7 +36,7 @@ export default function FormLogin() {
                 <p className="text-red-500 text-xs">{errors.email?.message}</p>
             </div>
             <div className="mb-3">
-                <FormInput register={register("password")} type="passowrd" errors={errors?.password} placeholder="masukan password anda" />
+                <FormInput register={register("password")} type="password" errors={errors?.password} placeholder="masukan password anda" />
                 <p className="text-red-500 text-xs">{errors.password?.message}</p>
             </div>
             <div className="mt-7">

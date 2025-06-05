@@ -1,3 +1,4 @@
 export default {
     MENU_SERVICE: 'MENU_SERVICE',
+    BANNER_SERVICE: 'BANNER_SERVICE',
 }

@@ -1,11 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
 import Layout_1 from '../../components/layput/layput_1';
+import Banner from './banner';
 import MenuDashboard from './menu';
 
 export default function Dashboard() {
@@ -60,34 +55,7 @@ export default function Dashboard() {
         <div>
             <Layout_1>
                 <MenuDashboard />
-                <div className="w-full mx-auto mt-16 ">
-                    <div className='w-full max-w-7xl mx-auto  mb-4 '>
-                        <h6 className="font-semibold">Temukan Promo Menarik</h6>
-                    </div>
-                    <Swiper
-                        slidesPerView={4}
-                        spaceBetween={30}
-                        centeredSlides={true}
-                        pagination={{
-                            clickable: true,
-                        }}
-                        modules={[Pagination]}
-                        className="mySwiper"
-                    >
-                        {promos.map((promo) => (
-                            <SwiperSlide>
-                                <div
-                                    key={promo.title}
-                                    // href={promo.link}
-                                    className={`rounded-xl p-4 w-full text-white ${promo.color} hover:scale-105 transition-transform shadow`}
-                                >
-                                    <h3 className="text-lg font-bold">{promo.title}</h3>
-                                    <p className="text-sm mt-2">{promo.description}</p>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
+                <Banner />
             </Layout_1>
         </div>
     )

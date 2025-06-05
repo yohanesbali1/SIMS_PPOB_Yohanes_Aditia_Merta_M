@@ -9,3 +9,12 @@ export const menuService = () => async (dispatch: Dispatch<any>) => {
         throw e.response;
     }
 }
+
+export const bannerService = () => async (dispatch: Dispatch<any>) => {
+    try {
+        const response = await apiClient().get(`/banner`);
+        dispatch({ type: types.BANNER_SERVICE, payload: response.data.data });
+    } catch (e: any) {
+        throw e.response;
+    }
+}
