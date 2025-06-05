@@ -7,7 +7,7 @@ export const loginData = (payload: any) => async (dispatch: Dispatch<any>) => {
         const response = await apiClient().post(`/login`, payload);
         dispatch({ type: types.LOGIN_DATA, payload: response.data.data });
     } catch (e: any) {
-        throw e.response;
+        throw e.response.data;
     }
 }
 export const registerData = (payload: any) => async (dispatch: Dispatch<any>) => {
