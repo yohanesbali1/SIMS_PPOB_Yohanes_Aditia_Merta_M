@@ -1,31 +1,17 @@
-import Swal from "sweetalert2";
-
-export const formatRupiah = (angka: number) => {
+export const formatRupiah = (angka: number, withSymbol = true) => {
     return new Intl.NumberFormat("id-ID", {
-        style: "currency",
+        style: withSymbol ? "currency" : "decimal",
         currency: "IDR",
         minimumFractionDigits: 0,
     }).format(angka);
 };
 
-export const swal_alert = (payload?: any) => {
-    const { status, message } = payload || {};
-    switch (status) {
-        case "success":
-            break;
-        default:
-            Swal.fire({
-                text: message,
-                icon: 'error',
-                color: "#f42619",
-                background: "#fff5f3",
-                showCloseButton: true,
-                toast: true,
-                showCancelButton: false,
-                showConfirmButton: false,
-                position: 'bottom-start', // bottom-left
-                timer: 5000, // auto close after 5 seconds (optional)
-                // timerProgressBar: true
-            });
-    }
+export const format_number = (number: number): string => {
+    if (!number) return '0';
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+export const parseRupiahToNumber = (value: string): number => {
+    const numberString = value.replace(/[^0-9]/g, '');
+    return Number(numberString) || 0;
 }

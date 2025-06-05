@@ -47,9 +47,9 @@ export default function FormAccount(payload: any) {
     const onSubmit = async (data: updateProfileForm) => {
         try {
             setBusy(true);
-            showLoading('Processing update profile', 'Please wait...');
+            showLoading('Processing update profile', '');
             await dispatch(profileUpdateData(data));
-            await showResult('success', 'Perubahan Data Diri', 'Data Diri', 'Close');
+            await showResult('success', 'Perubahan Data Diri', '', 'Close');
             setBusy(false);
             setCanEdit(false);
         } catch (e: any) {
@@ -104,7 +104,7 @@ export default function FormAccount(payload: any) {
                     confirmText={modal.confirmText}
                     cancelText={modal.cancelText}
                     style_message={"hidden  "}
-                    style_title={"text-xl font-semibold"}
+                    style_title={"text-xl font-semibold mb-0"}
                 />
             )}
         </>

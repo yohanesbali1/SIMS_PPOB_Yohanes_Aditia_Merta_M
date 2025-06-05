@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { loginData } from "../../../store/reducers/auth/auth.action";
 import { FormInput } from "../../../components/form";
 import { useState } from "react";
-import { swal_alert } from "../../../helper/helper";
 import Toast from "../../../helper/toast";
 interface LoginForm {
     email: string;
@@ -30,7 +29,6 @@ export default function FormLogin() {
             history.push('/dashboard');
             return true;
         } catch (e: any) {
-            swal_alert({ message: e?.message || 'Terjadi Kesalahan' });
         }
     }
 

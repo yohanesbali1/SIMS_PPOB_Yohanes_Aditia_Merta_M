@@ -21,14 +21,10 @@ export default function apiClient(): AxiosInstance {
                 typeof window !== "undefined" &&
                 window.location.pathname !== "/"
             ) {
-                // Cookies.remove("token");
-                // localStorage.clear();
-                // window.location.href = "/";
+                Cookies.remove("token");
+                localStorage.clear();
+                window.location.href = "/";
             }
-            // Uncomment to handle 429
-            // if (error.response?.status === 429) {
-            //   Swallalert('error', error.response.data);
-            // }
             return Promise.reject(error);
         }
     );

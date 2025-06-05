@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { topupData } from "../../store/reducers/transaction/transaction.action";
 import ModalAlert from "../../components/modal";
 import { useModalAlert } from "../../hook/useModalAlert";
-import { formatRupiah } from "../../helper/helper";
+import { format_number, formatRupiah, parseRupiahToNumber } from "../../helper/helper";
 
 interface topupForm {
     top_up_amount: number;
@@ -31,18 +31,18 @@ export default function FormTopUp() {
 
 
     const options = [
-        { value: '10000', label: '10.000' },
-        { value: '20000', label: '20.000' },
-        { value: '50000', label: '50.000' },
-        { value: '100000', label: '100.000' },
-        { value: '1000000', label: '1.000.000' },
+        { value: 10000, label: '10.000' },
+        { value: 20000, label: '20.000' },
+        { value: 50000, label: '50.000' },
+        { value: 100000, label: '100.000' },
+        { value: 1000000, label: '1.000.000' },
     ];
 
 
     const schema = yup.object().shape({
         top_up_amount: yup.number().min(10000, 'Minimal top up adalah 10.000').max(1000000).required('email wajib diisi'),
     })
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<topupForm>({
+    const { register, handleSubmit, getValues, setValue, watch, formState: { errors } } = useForm<topupForm>({
         resolver: yupResolver(schema)
     })
 
@@ -77,45 +77,41 @@ export default function FormTopUp() {
             showLoading('Processing top-up', 'Please wait...');
             await dispatch(topupData(data));
             await showResult('success', 'Top-up Sebesar', formatRupiah(data.top_up_amount), 'Kembali ke beranda');
-            history.push('/dashboard');
+            // history.push('/dashboard');
             setBusy(false);
         } catch (e: any) {
             setBusy(false);
-            showResult('error', 'Top-up Failed', e.message);
+            showResult('error', 'Top Up sebesar', formatRupiah(data.top_up_amount), 'Kembali ke beranda');
         }
     };
 
     return (
         <>
-
             <div className="grid grid-cols-3 gap-x-6">
                 <div className="col-span-2">
                     <FormInput
                         onWheel={(e: any) => e.currentTarget.blur()}
                         disabled={busy}
+                        value={format_number(getValues('top_up_amount') || 0)} // format number ke string rupiah
+                        onChange={(e: any) => {
+                            const numberVal = parseRupiahToNumber(e.target.value);
+                            setValue('top_up_amount', numberVal, { shouldValidate: true });
+                        }}
                         icon="fa fa-money-bill"
-                        register={register("top_up_amount")} type="number" min={10000} max={1000000} errors={errors?.top_up_amount} placeholder="masukan nominal Top Up" />
+                        type="text" errors={errors?.top_up_amount} placeholder="masukan nominal Top Up" />
                 </div>
                 <div className="grid grid-cols-3 row-span-2 gap-3">
                     {options.map((option: any, index: number) => (
-                        <label
+                        <div
                             key={index}
-                            htmlFor={`${index}`}
+                            onClick={() => setValue("top_up_amount", option.value, { shouldValidate: true })}
                             className={`block p-3 rounded-lg border cursor-pointer transition-all duration-150 ${top_up === option.value
                                 ? "bg-primary text-white border-primary"
                                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
                                 }`}
                         >
-                            <input
-                                type="radio"
-                                id={`${index}`}
-                                disabled={busy}
-                                value={option.value}
-                                onChange={(e: any) => setValue("top_up_amount", e.target.value, { shouldValidate: true })}
-                                className="hidden"
-                            />
                             {option.label}
-                        </label>
+                        </div>
                     ))}
                 </div>
                 <div className="col-span-2">

@@ -59,12 +59,13 @@ export default function FormService(payload: any) {
             showLoading('Processing top-up', 'Please wait...');
             await dispatch(transactionData(form));
             await showResult('success', `Pembayaran ${data?.service_name} prabayar senilai`, formatRupiah(data?.service_tariff ?? 0), 'Kembali ke beranda');
-            history.push('/dashboard');
+            // history.push('/dashboard');
             setBusy(false);
             return true;
         } catch (e: any) {
             setBusy(false);
-            return false
+            showResult('error', `Pembayaran ${data?.service_name} prabayar senilai`, formatRupiah(data?.service_tariff ?? 0), 'Kembali ke beranda');
+
         }
     }
 
@@ -75,7 +76,7 @@ export default function FormService(payload: any) {
                     <FormInput
                         readOnly
                         icon="fa fa-money-bill"
-                        value={formatRupiah(data?.service_tariff ?? 0)} type="text" placeholder="masukan nominal " />
+                        value={formatRupiah(data?.service_tariff ?? 0, false)} type="text" placeholder="masukan nominal " />
                 </div>
                 <div className="">
                     <button type="button" disabled={busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white px-4 py-3 rounded-md w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400">

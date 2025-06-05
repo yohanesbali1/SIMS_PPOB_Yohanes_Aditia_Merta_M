@@ -2,13 +2,8 @@ import FormLogin from "./form";
 import Logo from "../../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { swal_alert } from "../../../helper/helper";
 
 export default function Login() {
-    const [isModalOpen, setIsModalOpen] = useState(true);
-    // useEffect(() => {
-    //     swal_alert();
-    // }, [])
     return (
         <>
             <div className="w-full flex  min-h-screen">

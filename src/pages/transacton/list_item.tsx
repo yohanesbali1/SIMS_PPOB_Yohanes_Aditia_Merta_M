@@ -5,6 +5,8 @@ import moment from 'moment-timezone';
 import 'moment/locale/id';
 import { set } from "react-hook-form";
 import { formatRupiah } from "../../helper/helper";
+import { useModalAlert } from "../../hook/useModalAlert";
+import ModalAlert from "../../components/modal";
 
 
 interface ListDataProps {
@@ -15,6 +17,15 @@ interface ListDataProps {
 }
 export default function ListData() {
     const dispatch = useDispatch<any>();
+    const {
+        modal,
+        showConfirm,
+        showLoading,
+        showResult,
+        closeModal,
+        confirmModal,
+    } = useModalAlert();
+
     const [option_filter, setOptionFilter] = useState<ListDataProps['search']>({
         offset: 0,
         limit: 5
@@ -38,17 +49,17 @@ export default function ListData() {
     const getData = async () => {
         try {
             setBusy(true);
+            showLoading('Transaksi', '');
             let payload = {
                 offset: option_filter.offset,
                 limit: option_filter.limit
             }
             await dispatch(historyData(payload));
+            closeModal();
             setOptionFilter({ ...option_filter, offset: option_filter.offset + option_filter.limit });
             setBusy(false);
         } catch (e: any) {
-            console.error("Fetch error:", e);
-        } finally {
-            setBusy(false);
+            showResult('error', 'List Transaksi Gagal', e?.message || "Terjadi kesalahan");
         }
     }
 
@@ -67,27 +78,43 @@ export default function ListData() {
     }
 
     return (
-        <div>
-            <div className="mt-3 flex flex-col gap-3 mb-3">
-                {
-                    data.map((item: any, index: number) => (
-                        <div key={index} className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border">
-                            <div>
-                                <div className={type_payment(item.transaction_type)?.color}>
-                                    {type_payment(item.transaction_type)?.symbol} <span className="font-semibold">{formatRupiah(item.total_amount)}</span>
-                                </div>
-                                <p className="text-xs text-gray-400 mt-1">{moment(item.created_at).tz('Asia/Jakarta').locale('id').format('DD MMMM YYYY HH:mm')} WIB</p>
-                            </div>
-                            <div className="text-sm">
-                                {item.description}
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
+        <>
             <div>
-                {hasMore && <button type="button" disabled={busy} onClick={() => getData()} className="w-full mt-4 py-2 text-primary text-sm ">Show More</button>}
+                <div className="mt-3 flex flex-col gap-3 mb-3">
+                    {
+                        data.map((item: any, index: number) => (
+                            <div key={index} className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border">
+                                <div>
+                                    <div className={type_payment(item.transaction_type)?.color}>
+                                        {type_payment(item.transaction_type)?.symbol} <span className="font-semibold">{formatRupiah(item.total_amount)}</span>
+                                    </div>
+                                    <p className="text-xs text-gray-400 mt-1">{moment(item.created_at).tz('Asia/Jakarta').locale('id').format('DD MMMM YYYY HH:mm')} WIB</p>
+                                </div>
+                                <div className="text-sm">
+                                    {item.description}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div>
+                    {hasMore && <button type="button" disabled={busy} onClick={() => getData()} className="w-full mt-4 py-2 text-primary text-sm ">Show More</button>}
+                </div>
             </div>
-        </div>
+            {modal && (
+                <ModalAlert
+                    isOpen={!!modal}
+                    onClose={closeModal}
+                    onConfirm={confirmModal}
+                    type={modal.type}
+                    title={modal.title}
+                    message={modal.message}
+                    confirmText={modal.confirmText}
+                    cancelText={modal.cancelText}
+                    style_message={"hidden "}
+                    style_title={"text-xl font-regular mb-1"}
+                />
+            )}
+        </>
     )
 }

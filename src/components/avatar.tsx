@@ -3,9 +3,19 @@ import ImgAvatar from "../assets/avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { profileUpdateImage } from "../store/reducers/auth/auth.action";
+import ModalAlert from "./modal";
+import { useModalAlert } from "../hook/useModalAlert";
 
 export default function Avatar() {
     const { data_user } = useSelector((state: any) => state.auth);
+    const {
+        modal,
+        showConfirm,
+        showLoading,
+        showResult,
+        closeModal,
+        confirmModal,
+    } = useModalAlert();
     const [name, set_name] = useState<any>("-");
     const location = useLocation();
     const isAccountRoute = location.pathname === "/account";
@@ -35,46 +45,64 @@ export default function Avatar() {
 
     const UploadImage = async (image: any) => {
         try {
+            showLoading('Proses upload gambar', 'Please wait...');
             let payload = {
                 file: image
             }
             await dispatch(profileUpdateImage(payload));
+            await showResult('success', 'Upload Gambar Berhasil', '', 'Kembali ke beranda');
         } catch (e: any) {
-            console.log(e);
+            showResult('error', 'Top-up Failed', e?.message || "Terjadi kesalahan");
         }
     };
 
     return (
-        <div className={`w-full ${(isAccountRoute ? "flex flex-col items-center" : "")}`}>
-            <div className="relative">
-                <div className={`${(isAccountRoute ? "w-24 h-24" : "w-16 h-16")} border border-gray-100 rounded-full mb-4`}>
-                    <img
-                        src={data_user?.profile_image || ImgAvatar}
-                        alt="avatar"
-                        className="w-full h-full rounded-full object-cover"
-                        onError={(e: any) => {
-                            e.target.onerror = null;
-                            e.target.src = ImgAvatar;
-                        }}
+        <>
+            <div className={`w-full ${(isAccountRoute ? "flex flex-col items-center" : "")}`}>
+                <div className="relative">
+                    <div className={`${(isAccountRoute ? "w-24 h-24" : "w-16 h-16")} border border-gray-100 rounded-full mb-4`}>
+                        <img
+                            src={data_user?.profile_image || ImgAvatar}
+                            alt="avatar"
+                            className="w-full h-full rounded-full object-cover"
+                            onError={(e: any) => {
+                                e.target.onerror = null;
+                                e.target.src = ImgAvatar;
+                            }}
+                        />
+                    </div>
+                    {
+                        isAccountRoute &&
+                        <div onClick={handleUploadClick} className="absolute right-0 bottom-3 cursor-pointer w-8 h-8 bg-white rounded-full flex items-center justify-center border border-gray-100">
+                            <i className="fa fa-pen text-sm"></i>
+                        </div>
+                    }
+                    <input
+                        key="file-input" // helps React reinitialize if needed
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        className="hidden"
+                        onChange={handleImageChange}
                     />
                 </div>
-                {
-                    isAccountRoute &&
-                    <div onClick={handleUploadClick} className="absolute right-0 bottom-3 cursor-pointer w-8 h-8 bg-white rounded-full flex items-center justify-center border border-gray-100">
-                        <i className="fa fa-pen text-sm"></i>
-                    </div>
-                }
-                <input
-                    key="file-input" // helps React reinitialize if needed
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    className="hidden"
-                    onChange={handleImageChange}
-                />
+                {!isAccountRoute && <p className="text-lg mb-0">Selamat Datang,</p>}
+                <h5 className="text-2xl font-semibold">{name}</h5>
             </div>
-            {!isAccountRoute && <p className="text-lg mb-0">Selamat Datang,</p>}
-            <h5 className="text-2xl font-semibold">{name}</h5>
-        </div>
+            {modal && (
+                <ModalAlert
+                    isOpen={!!modal}
+                    onClose={closeModal}
+                    onConfirm={confirmModal}
+                    type={modal.type}
+                    title={modal.title}
+                    message={modal.message}
+                    confirmText={modal.confirmText}
+                    cancelText={modal.cancelText}
+                    style_message={"hidden "}
+                    style_title={"text-xl font-semibold mb-0"}
+                />
+            )}
+        </>
     );
 }
