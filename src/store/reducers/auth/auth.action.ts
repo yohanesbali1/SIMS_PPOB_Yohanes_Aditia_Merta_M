@@ -35,3 +35,16 @@ export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any
         throw e.response;
     }
 }
+export const profileUpdateImage = (payload: any) => async (dispatch: Dispatch<any>) => {
+    try {
+        await apiClient().put(`/profile/image`, payload, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        dispatch(profileData());
+        return true;
+    } catch (e: any) {
+        throw e.response;
+    }
+}

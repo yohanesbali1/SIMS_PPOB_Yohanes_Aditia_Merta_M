@@ -49,7 +49,7 @@ export default function FormAccount(payload: any) {
             <form action="" autoCapitalize="off" autoComplete="off" id="account" >
                 <div>
                     <FormLabel htmlFor="email">Email</FormLabel>
-                    <FormInput value={data_user?.email} disabled readOnly type="email" placeholder="masukan email anda" />
+                    <FormInput value={data_user?.email ?? ""} disabled readOnly type="email" placeholder="masukan email anda" />
                 </div>
                 <div className="mt-3">
                     <FormLabel htmlFor="first_name">First Name</FormLabel>
@@ -63,8 +63,12 @@ export default function FormAccount(payload: any) {
             </form>
             <div className="mt-7">
                 {
-                    can_edit ?
-                        <button disabled={busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white py-3 px-4 rounded-sm w-full font-semibold">Simpan</button>
+                    can_edit ? (
+                        <>
+                            <button disabled={busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white py-3 px-4 rounded-sm w-full font-semibold">Simpan</button>
+                            <button disabled={busy} onClick={() => setCanEdit(false)} className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold mt-5">Batal</button>
+                        </>
+                    )
                         : <button
                             onClick={() => setCanEdit(true)}
                             className="bg-white rounded-sm py-3 px-4 w-full border border-primary text-primary font-semibold"

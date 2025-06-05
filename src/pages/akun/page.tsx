@@ -8,6 +8,7 @@ import { profileData, profileUpdateData } from "../../store/reducers/auth/auth.a
 import { useEffect, useState } from "react";
 import FormAccount from "./form";
 import Cookies from "js-cookie";
+import Avatar from "../../components/avatar";
 
 
 
@@ -31,8 +32,11 @@ export default function Account() {
 
     return (
         <div className="w-full max-w-4xl mx-auto mt-10">
-            <FormAccount data_user={data_user} setCanEdit={setCanEdit} can_edit={can_edit} />
+            <div>
+                <Avatar />
 
+            </div>
+            <FormAccount data_user={data_user} setCanEdit={setCanEdit} can_edit={can_edit} />
             {!can_edit &&
                 <div className="mt-4">
                     <button type="button" onClick={logOut} className="bg-primary text-white py-3 px-4 rounded-sm w-full">Logout</button>

@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import "swiper/css/navigation";
 import { useDispatch, useSelector } from 'react-redux';
 import { bannerService } from '../../store/reducers/serives/service.action';
 
@@ -15,7 +12,6 @@ export default function Banner() {
 
     useEffect(() => {
         checkScrollPosition();
-        // Tambahkan event listener scroll untuk update tombol
         const scrollEl = scrollRef.current;
         if (scrollEl) {
             scrollEl.addEventListener('scroll', checkScrollPosition);
@@ -37,9 +33,7 @@ export default function Banner() {
 
     const checkScrollPosition = () => {
         if (!scrollRef.current) return;
-
         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-
         setCanScrollLeft(scrollLeft > 0);
         setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
     };
@@ -89,7 +83,7 @@ export default function Banner() {
                             <img
                                 key={index}
                                 src={promo.banner_image}
-                                // alt={promo.alt}
+                                alt={index}
                                 className="inline-block w-96 h-36 object-cover rounded-xl shadow-md flex-shrink-0"
                             />
                         ))}

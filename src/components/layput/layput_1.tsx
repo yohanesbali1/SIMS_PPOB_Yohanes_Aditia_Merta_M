@@ -17,8 +17,6 @@ export default function Layout_1({ children }: any) {
             <div className="flex justify-between items-center w-full max-w-7xl mx-auto mt-16">
                 <div className="flex-1">
                     <Avatar />
-                    <p className="text-lg mt-4">Selamat Datang,</p>
-                    <h5 className="text-2xl font-semibold">{name}</h5>
                 </div>
                 <div className="flex-1">
                     <Wallet />

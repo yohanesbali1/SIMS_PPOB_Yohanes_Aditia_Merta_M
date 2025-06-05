@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { loginData } from "../../../store/reducers/auth/auth.action";
 import { FormInput } from "../../../components/form";
+import { useState } from "react";
 interface LoginForm {
     email: string;
     password: string;
@@ -12,6 +13,7 @@ interface LoginForm {
 export default function FormLogin() {
     const dispatch = useDispatch<any>();
     const history = useHistory();
+    const [show, setShow] = useState<boolean>(false);
     const schema = yup.object().shape({
         email: yup.string().email().required('email wajib diisi'),
         password: yup.string().required('password wajib diisi'),
@@ -32,11 +34,13 @@ export default function FormLogin() {
     return (
         <form action="" onSubmit={handleSubmit(onSubmit)} className="mt-4">
             <div className="mb-3">
-                <FormInput register={register("email")} type="email" errors={errors?.email} placeholder="masukan email anda" />
+                <FormInput icon="fa fa-user" register={register("email")} type="email" errors={errors?.email} placeholder="masukan email anda" />
                 <p className="text-red-500 text-xs">{errors.email?.message}</p>
             </div>
             <div className="mb-3">
-                <FormInput register={register("password")} type="password" errors={errors?.password} placeholder="masukan password anda" />
+                <FormInput icon="fa fa-key" register={register("password")} icon_passowrd="fa fa-eye" type={show ? "text" : "password"} errors={errors?.password} placeholder="masukan password anda" >
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={() => setShow(!show)} ><i className={`${show ? "fa fa-eye" : "fa fa-eye-slash"} text-gray-400 text-sm`}></i></span>
+                </FormInput>
                 <p className="text-red-500 text-xs">{errors.password?.message}</p>
             </div>
             <div className="mt-7">
