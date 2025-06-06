@@ -42,7 +42,7 @@ export default function FormTopUp() {
     const schema = yup.object().shape({
         top_up_amount: yup.number().min(10000, 'Minimal top up adalah 10.000').max(1000000).required('email wajib diisi'),
     })
-    const { register, handleSubmit, getValues, setValue, watch, formState: { errors } } = useForm<topupForm>({
+    const { reset, handleSubmit, getValues, setValue, watch, formState: { errors } } = useForm<topupForm>({
         resolver: yupResolver(schema)
     })
 
@@ -50,10 +50,10 @@ export default function FormTopUp() {
     const top_up = watch("top_up_amount");
 
     useEffect(() => {
-        if (top_up < 10000 || top_up > 1000000) {
-            return setDisabled(true);
+        if (top_up >= 10000 && top_up <= 1000000) {
+            return setDisabled(false);
         }
-        return setDisabled(false);
+        return setDisabled(true);
     }, [top_up])
 
     useEffect(() => {
@@ -77,6 +77,7 @@ export default function FormTopUp() {
             showLoading('Processing top-up', 'Please wait...');
             await dispatch(topupData(data));
             await showResult('success', 'Top-up Sebesar', formatRupiah(data.top_up_amount), 'Kembali ke beranda');
+            reset();
             // history.push('/dashboard');
             setBusy(false);
         } catch (e: any) {
@@ -87,8 +88,8 @@ export default function FormTopUp() {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-x-6">
-                <div className="col-span-2">
+            <div className="grid grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-y-4 gap-x-6">
+                <div className="col-span-2 lg:col-span-1">
                     <FormInput
                         onWheel={(e: any) => e.currentTarget.blur()}
                         disabled={busy}
@@ -100,7 +101,7 @@ export default function FormTopUp() {
                         icon="fa fa-money-bill"
                         type="text" errors={errors?.top_up_amount} placeholder="masukan nominal Top Up" />
                 </div>
-                <div className="grid grid-cols-3 row-span-2 gap-3">
+                <div className="grid grid-cols-3 row-span-2 md:row-span-1 gap-3">
                     {options.map((option: any, index: number) => (
                         <div
                             key={index}
@@ -114,7 +115,7 @@ export default function FormTopUp() {
                         </div>
                     ))}
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-2 lg:col-span-1 md:mt-10">
                     <button type="button" disabled={disabled || busy} onClick={handleSubmit(onSubmit)} className="bg-primary text-white px-4 py-3 rounded-md w-full disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400">
                         Top Up
                     </button>

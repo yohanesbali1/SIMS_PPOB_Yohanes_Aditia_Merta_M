@@ -38,7 +38,7 @@ export default function Account() {
             </div>
             <FormAccount data_user={data_user} setCanEdit={setCanEdit} can_edit={can_edit} />
             {!can_edit &&
-                <div className="mt-4">
+                <div className="mt-4 px-4">
                     <button type="button" onClick={logOut} className="bg-primary text-white py-3 px-4 rounded-sm w-full">Logout</button>
                 </div>
             }

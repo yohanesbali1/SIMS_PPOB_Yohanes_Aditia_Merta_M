@@ -60,7 +60,7 @@ export default function Avatar() {
         <>
             <div className={`w-full ${(isAccountRoute ? "flex flex-col items-center" : "")}`}>
                 <div className="relative">
-                    <div className={`${(isAccountRoute ? "w-24 h-24" : "w-16 h-16")} border border-gray-100 rounded-full mb-4`}>
+                    <div className={`${(isAccountRoute ? "w-24 h-24" : "w-16 h-16")} border border-gray-200 rounded-full mb-4 object-cover`}>
                         <img
                             src={data_user?.profile_image || ImgAvatar}
                             alt="avatar"

@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuService } from "../../store/reducers/serives/service.action";
 import FormService from "./form";
+import { Helmet } from "react-helmet";
 
 export default function Service() {
     const { service } = useParams<any>();
@@ -25,14 +26,17 @@ export default function Service() {
         try {
             await dispatch(menuService());
         } catch (e: any) {
-            // throw e.response;
         }
     }
 
     return (
-        <div>
+        <>
+            <Helmet>
+                <title>{`Pembayaran ${data?.service_name || '-'}`} | SIMS PPOB</title>
+                <meta name="description" content={`Halaman pembayaran ${data?.service_name || '-'} SIMS PPOB`} />
+            </Helmet>
             <Layout_1>
-                <div className="w-full max-w-7xl mx-auto mt-10">
+                <div className="w-full max-w-7xl mx-auto mt-10 px-4">
                     <p className="font-semibold text-base mb-4">Pembayaran</p>
                     <div className="flex gap-3 items-center">
                         <div>
@@ -41,11 +45,11 @@ export default function Service() {
                         <h6 className="font-semibold text-lg">{data?.service_name}</h6>
                     </div>
                 </div>
-                <div className="w-full max-w-7xl mx-auto mt-10">
+                <div className="w-full max-w-7xl mx-auto mt-10 px-4 pb-10">
                     <FormService data={data} />
                 </div>
 
             </Layout_1>
-        </div>
+        </>
     )
 }

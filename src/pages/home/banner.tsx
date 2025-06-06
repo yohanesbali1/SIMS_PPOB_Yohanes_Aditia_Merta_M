@@ -66,11 +66,11 @@ export default function Banner() {
     };
     return (
         <>
-            <div className="w-full mx-auto mt-16 ">
-                <div className='w-full max-w-7xl mx-auto  mb-4 '>
+            <div className="w-full mx-auto mt-16 px-4">
+                <div className='w-full max-w-7xl mx-auto  mb-4 lg:mb-2 '>
                     <h6 className="font-semibold">Temukan Promo Menarik</h6>
                 </div>
-                <div className="px-6 py-8 relative">
+                <div className="px-6 md:px-0 py-8 lg:py-4 relative">
                     {canScrollLeft && (
                         <button
                             onClick={scrollLeft}
@@ -92,7 +92,7 @@ export default function Banner() {
                         </button>
                     )}
 
-                    <div className="overflow-x-auto -ml-5 pl-80 scroll-hide" ref={scrollRef}>
+                    <div className="overflow-x-auto -ml-5 md:ml-0 pl-80 lg:pl-0 md:pl-0 scroll-hide" ref={scrollRef}>
                         <div className="flex gap-4 whitespace-nowrap">
                             {banner_service.map((promo: any, index: any) => (
                                 <img

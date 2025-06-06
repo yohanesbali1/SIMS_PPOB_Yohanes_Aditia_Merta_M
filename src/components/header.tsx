@@ -26,7 +26,7 @@ export default function Header() {
 
     return (
         <header className="w-full  py-4 border-b ">
-            <div className="w-full max-w-7xl mx-auto flex items-center justify-between">
+            <div className="w-full px-4 lg:px-6 max-w-7xl mx-auto flex items-center justify-between">
                 <Link to="/dashboard">
                     <div className="flex gap-x-2 items-center">
                         <div className="w-7 h-7">

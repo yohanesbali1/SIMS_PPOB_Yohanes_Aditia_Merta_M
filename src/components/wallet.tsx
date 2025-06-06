@@ -22,7 +22,7 @@ export default function Wallet() {
     }
 
     return (
-        <div className="bg-primary rounded-xl w-full px-8 py-6 text-white">
+        <div className="bg-primary rounded-xl w-full px-5 py-6  text-white">
             <p className="mb-4">Saldo anda</p>
             <h6 className="text-3xl mb-4 font-semibold">{show ? formatRupiah(money) : "*******"}</h6>
             <div className="flex text-xs gap-x-2 items-center">

@@ -17,7 +17,7 @@ export default function MenuDashboard() {
 
     return (
         <div className="w-full max-w-7xl mx-auto mt-16">
-            <div className="flex gap-6  flex-wrap">
+            <div className="flex gap-6  flex-wrap px-4 gap-2">
                 {menu_service.map((menu: any) => (
                     <Link key={menu.name}
                         to={`/${menu.service_code}`} className="  w-20 " >
