@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { FormInput } from "../../../components/form";
 import { useModalAlert } from "../../../hook/useModalAlert";
 import ModalAlert from "../../../components/modal";
+import Toast from "../../../components/toast";
 interface LoginForm {
     email: string;
     first_name: string;
@@ -20,10 +21,6 @@ export default function FormRegister() {
     const history = useHistory();
     const [busy, setBusy] = useState(false);
 
-    useEffect(() => {
-
-        showResult('error', 'Proses Registrasi', "Terjadi kesalahan", 'Kembali ke beranda');
-    }, [])
     const {
         modal,
         showConfirm,
@@ -32,6 +29,7 @@ export default function FormRegister() {
         closeModal,
         confirmModal,
     } = useModalAlert();
+
     const [show, setShow] = useState<any>({
         password: false,
         c_password: false
@@ -48,6 +46,7 @@ export default function FormRegister() {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: yupResolver(schema)
     })
+
     const onSubmit = async (data: LoginForm) => {
         try {
             setBusy(true);
@@ -65,18 +64,18 @@ export default function FormRegister() {
 
     return (
         <>
-            <form action="" onSubmit={handleSubmit(onSubmit)} className="mt-4">
+            <form action="" autoCapitalize="off" autoCorrect="off" autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="mt-4">
                 <div className="mb-3">
                     <FormInput icon="fa fa-user" register={register("email")} type="email" errors={errors?.email} placeholder="masukan email anda" />
 
                     <p className="text-red-500 text-xs">{errors.email?.message}</p>
                 </div>
                 <div className="mb-3">
-                    <FormInput icon="fa fa-user" register={register("first_name")} type="email" errors={errors?.first_name} placeholder="masukan nama depan anda" />
+                    <FormInput icon="fa fa-user" register={register("first_name")} type="text" errors={errors?.first_name} placeholder="masukan nama depan anda" />
                     <p className="text-red-500 text-xs">{errors.first_name?.message}</p>
                 </div>
                 <div className="mb-3">
-                    <FormInput icon="fa fa-user" register={register("last_name")} type="email" errors={errors?.last_name} placeholder="masukan nama belakang anda" />
+                    <FormInput icon="fa fa-user" register={register("last_name")} type="text" errors={errors?.last_name} placeholder="masukan nama belakang anda" />
                     <p className="text-red-500 text-xs">{errors.last_name?.message}</p>
                 </div>
                 <div className="mb-3">
@@ -95,6 +94,7 @@ export default function FormRegister() {
                     <button type="submit" className="bg-primary text-white py-3 px-4 rounded-sm w-full">Login</button>
                 </div>
             </form>
+
             {modal && (
                 <ModalAlert
                     isOpen={!!modal}
