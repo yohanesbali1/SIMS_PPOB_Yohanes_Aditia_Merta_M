@@ -61,7 +61,7 @@ export default function FormAccount(payload: any) {
     return (
         <>
 
-            <div className="w-full max-w-4xl mx-auto mt-10 px-4">
+            <div className="w-full max-w-4xl mx-auto mt-10 px-4 mb-5">
                 <form action="" autoCapitalize="off" autoComplete="off" id="account" >
                     <div>
                         <FormLabel htmlFor="email">Email</FormLabel>
