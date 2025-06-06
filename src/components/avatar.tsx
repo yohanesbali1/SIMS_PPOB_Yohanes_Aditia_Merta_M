@@ -37,12 +37,20 @@ export default function Avatar() {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            const allowedTypes = ["image/jpeg", "image/png"];
             const maxSize = 100 * 1024;
             if (file.size > maxSize) {
                 showToast("Ukuran gambar maksimal 100 KB.", {
                     title: "",
                     type: "error",
                 })
+                return;
+            }
+            if (!allowedTypes.includes(file.type)) {
+                showToast("Hanya gambar JPG dan PNG yang diperbolehkan.", {
+                    title: "",
+                    type: "error",
+                });
                 return;
             }
             UploadImage(file);
@@ -86,7 +94,7 @@ export default function Avatar() {
                     <input
                         key="file-input"
                         type="file"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png"
                         ref={fileInputRef}
                         className="hidden"
                         onChange={handleImageChange}

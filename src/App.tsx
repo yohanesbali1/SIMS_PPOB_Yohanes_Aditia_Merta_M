@@ -39,6 +39,10 @@ function App() {
           return true;
         }
         return history.push('/');
+      } else {
+        if (['/', '/register'].includes(location.pathname)) {
+          return history.push('/dashboard');
+        }
       }
     } catch (e) {
       Cookies.remove('token');
