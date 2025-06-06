@@ -11,6 +11,8 @@ import TopUp from './pages/top_up/page';
 import Transaction from './pages/transacton/page';
 import Service from './pages/service/page';
 import Account from './pages/akun/page';
+import ErrorPage from './pages/error';
+import ErrorBoundary from './components/errorBoundary';
 
 function App() {
   const history = useHistory();
@@ -37,16 +39,21 @@ function App() {
 
   return (
     <Route>
-      {token && <Header />}
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/topup" component={TopUp} />
-        <Route exact path="/transacton" component={Transaction} />
-        <Route exact path="/account" component={Account} />
-        <Route exact path="/:service" component={Service} />
-      </Switch>
+      <ErrorBoundary>
+
+        {token && <Header />}
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/topup" component={TopUp} />
+          <Route exact path="/transacton" component={Transaction} />
+          <Route exact path="/account" component={Account} />
+          <Route path="/error" component={ErrorPage} />
+          <Route exact path="/:service" component={Service} />
+          <Route component={ErrorPage} />
+        </Switch>
+      </ErrorBoundary>
     </Route>
   );
 }
