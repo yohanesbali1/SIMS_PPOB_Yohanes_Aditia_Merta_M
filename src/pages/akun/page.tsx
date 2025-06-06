@@ -21,7 +21,7 @@ export default function Account() {
     return (
         <>
             <Helmet>
-                <title>Akun | SIMS PPOB</title>
+                <title>Akun | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content="Halaman akun SIMS PPOB" />
             </Helmet>
             <div className="w-full max-w-4xl mx-auto pt-40 ">

@@ -7,7 +7,7 @@ export default function Login() {
     return (
         <>
             <Helmet>
-                <title>Login | SIMS PPOB</title>
+                <title>Login | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content="Selamat datang di SIMS PPOB" />
             </Helmet>
             <div className="w-full flex  min-h-screen">

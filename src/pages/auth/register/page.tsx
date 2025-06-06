@@ -8,7 +8,7 @@ export default function Register() {
     return (
         <>
             <Helmet>
-                <title>Register | SIMS PPOB</title>
+                <title>Register | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content="Pendaftaran akun SIMS PPOB" />
             </Helmet>
             <div className="w-full flex  min-h-screen">

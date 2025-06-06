@@ -43,7 +43,7 @@ export default function Service() {
     return (
         <>
             <Helmet>
-                <title>{`Pembayaran ${data?.service_name || '-'}`} | SIMS PPOB</title>
+                <title>{`Pembayaran ${data?.service_name || '-'}`} | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content={`Halaman pembayaran ${data?.service_name || '-'} SIMS PPOB`} />
             </Helmet>
             <Layout_1>

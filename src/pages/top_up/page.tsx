@@ -6,7 +6,7 @@ export default function TopUp() {
     return (
         <>
             <Helmet>
-                <title>Top Up | SIMS PPOB</title>
+                <title>Top Up | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content="Halaman Top Up SIMS PPOB" />
             </Helmet>
             <Layout_1>

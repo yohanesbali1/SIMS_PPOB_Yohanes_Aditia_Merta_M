@@ -7,7 +7,7 @@ export default function Transaction() {
     return (
         <>
             <Helmet>
-                <title>Riwayat Transaksi | SIMS PPOB</title>
+                <title>Riwayat Transaksi | SIMS PPOB Yohanes Aditia Merta M</title>
                 <meta name="description" content={`Riwayat Transaksi SIMS PPOB`} />
             </Helmet>
             <Layout_1>
