@@ -80,10 +80,13 @@ export default function FormTopUp() {
         if (!confirmed) return;
         try {
             setBusy(true);
-            showLoading('Processing top-up', 'Please wait...');
+            showLoading('Proses top-up', '');
             await dispatch(topupData(data));
             await showResult('success', 'Top-up Sebesar', formatRupiah(data.top_up_amount), 'Kembali ke beranda');
-            reset();
+            reset({
+                top_up_amount: 0,
+                transaction_type: 'TOPUP'
+            });
             // history.push('/dashboard');
             setBusy(false);
         } catch (e: any) {
@@ -99,7 +102,7 @@ export default function FormTopUp() {
                     <FormInput
                         onWheel={(e: any) => e.currentTarget.blur()}
                         disabled={busy}
-                        value={format_number(getValues('top_up_amount') || 0)} // format number ke string rupiah
+                        value={format_number(getValues('top_up_amount') || 0)}
                         onChange={(e: any) => {
                             const numberVal = parseRupiahToNumber(e.target.value);
                             setValue('top_up_amount', numberVal, { shouldValidate: true });

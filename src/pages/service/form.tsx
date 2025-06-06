@@ -47,7 +47,7 @@ export default function FormService(payload: any) {
         service_code: yup.string().required('wajib diisi'),
         transaction_type: yup.string().required('wajib diisi'),
     })
-    const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<transactionForm>({
+    const { reset, handleSubmit, setValue, getValues, formState: { errors } } = useForm<transactionForm>({
         resolver: yupResolver(schema),
         defaultValues: {
             transaction_type: 'PAYMENT',
@@ -73,16 +73,19 @@ export default function FormService(payload: any) {
         if (!confirmed) return;
         try {
             setBusy(true);
-            showLoading('Processing top-up', 'Please wait...');
+            showLoading(`Proses Pembayaran ${data?.service_name} prabayar`, '');
             await dispatch(transactionData(form));
             await showResult('success', `Pembayaran ${data?.service_name} prabayar senilai`, formatRupiah(data?.service_tariff ?? 0), 'Kembali ke beranda');
             // history.push('/dashboard');
+            reset({
+                transaction_type: 'PAYMENT',
+                service_code: data?.service_code
+            });
             setBusy(false);
             return true;
         } catch (e: any) {
             setBusy(false);
             showResult('error', `Pembayaran ${data?.service_name} prabayar senilai`, formatRupiah(data?.service_tariff ?? 0), 'Kembali ke beranda');
-
         }
     }
 

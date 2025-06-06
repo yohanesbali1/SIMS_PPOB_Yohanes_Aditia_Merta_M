@@ -49,7 +49,7 @@ export default function ListData() {
     const getData = async () => {
         try {
             setBusy(true);
-            showLoading('Transaksi', '');
+            showLoading('Proses Transaksi', '');
             let payload = {
                 offset: option_filter.offset,
                 limit: option_filter.limit
@@ -59,7 +59,7 @@ export default function ListData() {
             setOptionFilter({ ...option_filter, offset: option_filter.offset + option_filter.limit });
             setBusy(false);
         } catch (e: any) {
-            showResult('error', 'List Transaksi Gagal', e?.message || "Terjadi kesalahan");
+            showResult('error', 'List Transaksi Gagal', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
         }
     }
 

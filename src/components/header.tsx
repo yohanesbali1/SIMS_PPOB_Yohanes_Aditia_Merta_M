@@ -105,12 +105,12 @@ export default function Header() {
                     </button>
                 </div>
                 <nav className="px-6 py-4">
-                    <ul className="space-y-4 text-sm font-semibold">
+                    <ul className="space-y-5 text-sm font-semibold">
                         {menu.map((item, index) => (
                             <li key={index}>
                                 <Link
                                     to={item.link}
-                                    onClick={() => setIsSidebarOpen(false)} // Close sidebar on mobile
+                                    onClick={() => setIsSidebarOpen(false)}
                                     className={`block transition hover:text-red-600 ${isActive(item.link) ? "text-red-600" : ""
                                         }`}
                                 >

@@ -31,7 +31,7 @@ export default function FormLogin() {
 
     const schema = yup.object().shape({
         email: yup.string().email('email tidak valid').required('email wajib diisi'),
-        password: yup.string().required('password wajib diisi'),
+        password: yup.string().min(8, 'password minimal 8 karakter').required('password wajib diisi'),
     })
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
         resolver: yupResolver(schema)
@@ -43,7 +43,7 @@ export default function FormLogin() {
     const onSubmit = async (data: LoginForm) => {
         try {
             setBusy(true);
-            showLoading('Processing top-up', 'Please wait...');
+            showLoading('Proses Login', '');
             await dispatch(loginData(data));
             closeModal();
             setBusy(false);
@@ -92,8 +92,8 @@ export default function FormLogin() {
                     message={modal.message}
                     confirmText={modal.confirmText}
                     cancelText={modal.cancelText}
-                    style_message={"text-lg  font-semibold text-gray-700 "}
-                    style_title={"text-base font-regula mb-1"}
+                    style_message={"text-base "}
+                    style_title={"text-xl font-semibold mb-0"}
                 />
             )}
         </>

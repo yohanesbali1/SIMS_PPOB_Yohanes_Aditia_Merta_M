@@ -14,7 +14,7 @@ export const loginData = (payload: any) => async (dispatch: Dispatch<any>) => {
         // Cookies.set('token', datas.token);
         dispatch({ type: types.LOGIN_DATA, payload: response.data.data });
     } catch (e: any) {
-        throw e.response.data;
+        throw e?.response?.data;
     }
 }
 export const registerData = (payload: any) => async (dispatch: Dispatch<any>) => {
@@ -22,7 +22,7 @@ export const registerData = (payload: any) => async (dispatch: Dispatch<any>) =>
         await apiClient().post(`/registration`, payload);
         return true;
     } catch (e: any) {
-        throw e.response.data;
+        throw e?.response?.data;
     }
 }
 export const profileData = () => async (dispatch: Dispatch<any>) => {
@@ -30,7 +30,7 @@ export const profileData = () => async (dispatch: Dispatch<any>) => {
         const response = await apiClient().get(`/profile`);
         dispatch({ type: types.PROFILE_DATA, payload: response.data.data });
     } catch (e: any) {
-        throw e.response.data;
+        throw e?.response?.data;
     }
 }
 export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any>) => {
@@ -39,7 +39,7 @@ export const profileUpdateData = (payload: any) => async (dispatch: Dispatch<any
         dispatch({ type: types.PROFILE_DATA, payload: response.data.data });
         return true;
     } catch (e: any) {
-        throw e.response.data;
+        throw e?.response?.data;
     }
 }
 export const profileUpdateImage = (payload: any) => async (dispatch: Dispatch<any>) => {
@@ -52,6 +52,6 @@ export const profileUpdateImage = (payload: any) => async (dispatch: Dispatch<an
         dispatch({ type: types.PROFILE_DATA, payload: response.data.data });
         return true;
     } catch (e: any) {
-        throw e.response.data;
+        throw e?.response?.data;
     }
 }

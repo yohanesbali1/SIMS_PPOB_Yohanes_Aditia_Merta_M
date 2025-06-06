@@ -37,7 +37,7 @@ export default function Avatar() {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const maxSize = 100 * 1024; // 100 KB
+            const maxSize = 100 * 1024;
             if (file.size > maxSize) {
                 showToast("Ukuran gambar maksimal 100 KB.", {
                     title: "",
@@ -51,7 +51,7 @@ export default function Avatar() {
 
     const UploadImage = async (image: any) => {
         try {
-            showLoading('Proses upload gambar', 'Please wait...');
+            showLoading('Proses upload gambar', '');
             let payload = {
                 file: image
             }
@@ -84,7 +84,7 @@ export default function Avatar() {
                         </div>
                     }
                     <input
-                        key="file-input" // helps React reinitialize if needed
+                        key="file-input"
                         type="file"
                         accept="image/*"
                         ref={fileInputRef}
@@ -105,7 +105,7 @@ export default function Avatar() {
                     message={modal.message}
                     confirmText={modal.confirmText}
                     cancelText={modal.cancelText}
-                    style_message={"hidden "}
+                    style_message={"text-base "}
                     style_title={"text-xl font-semibold mb-0"}
                 />
             )}

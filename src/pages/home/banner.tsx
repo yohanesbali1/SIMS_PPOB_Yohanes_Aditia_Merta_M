@@ -39,7 +39,11 @@ export default function Banner() {
     }, [])
 
     const getData = async () => {
-        await dispatch(bannerService());
+        try {
+            await dispatch(bannerService());
+        } catch (e: any) {
+            showResult('error', 'Pengambilan Data Akun', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
+        }
     }
 
     const checkScrollPosition = () => {
@@ -113,8 +117,8 @@ export default function Banner() {
                     message={modal.message}
                     confirmText={modal.confirmText}
                     cancelText={modal.cancelText}
-                    style_message={"text-lg  font-semibold text-gray-700 "}
-                    style_title={"text-base font-regula mb-1"}
+                    style_message={"text-base "}
+                    style_title={"text-xl font-semibold mb-0"}
                 />
             )}
         </>
