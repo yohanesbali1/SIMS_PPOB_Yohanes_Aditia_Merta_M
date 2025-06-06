@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormInput } from "../../components/form";
 import { useEffect, useState } from "react";
@@ -12,11 +12,13 @@ import { formatRupiah } from "../../helper/helper";
 
 interface transactionForm {
     service_code: string;
+    transaction_type: string
 }
 export default function FormService(payload: any) {
     const { data } = payload;
     const dispatch = useDispatch<any>();
     const history = useHistory();
+    const { balance_data } = useSelector((state: any) => state.transaction);
     const [busy, setBusy] = useState(true);
     const {
         modal,
@@ -31,21 +33,36 @@ export default function FormService(payload: any) {
     useEffect(() => {
         if (data) {
             setValue('service_code', data.service_code);
-            return setBusy(false);
+            setValue('transaction_type', 'PAYMENT');
+            if (balance_data && data) {
+                if (balance_data.balance > data?.service_tariff) return setBusy(false);
+            }
+            return setBusy(true);
         }
         return setBusy(true);
-    }, [data])
-
+    }, [data, balance_data])
 
 
     const schema = yup.object().shape({
         service_code: yup.string().required('wajib diisi'),
+        transaction_type: yup.string().required('wajib diisi'),
     })
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<transactionForm>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            transaction_type: 'PAYMENT',
+            service_code: data?.service_code
+        }
     })
 
     const onSubmit = async (form: transactionForm) => {
+        if (balance_data && data) {
+            if (balance_data.balance < data?.service_tariff) {
+                showResult('error', `Pembayaran ${data?.service_name} prabayar senilai`, formatRupiah(data?.service_tariff ?? 0), 'Kembali ke beranda');
+                return false;
+            }
+        }
+
         const confirmed = await showConfirm(
             `Pembayaran ${data?.service_name} prabayar senilai`,
             `${formatRupiah(data?.service_tariff ?? 0)}`,

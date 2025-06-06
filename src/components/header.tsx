@@ -3,6 +3,8 @@ import { profileData } from "../store/reducers/auth/auth.action";
 import { useDispatch } from "react-redux";
 import Logo from "../assets/Logo.png";
 import { Link, useLocation } from "react-router-dom";
+import ModalAlert from "./modal";
+import { useModalAlert } from "../hook/useModalAlert";
 
 interface Menu {
     link: string;
@@ -11,7 +13,15 @@ interface Menu {
 export default function Header() {
     const dispatch = useDispatch<any>();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const location = useLocation(); // Get current path
+    const location = useLocation();
+    const {
+        modal,
+        showConfirm,
+        showLoading,
+        showResult,
+        closeModal,
+        confirmModal,
+    } = useModalAlert();
 
     const isActive = (path: string) => location.pathname === path;
     const [menu, setMenu] = useState<Menu[]>([
@@ -25,7 +35,11 @@ export default function Header() {
     }, [])
 
     const getData = async () => {
-        await dispatch(profileData());
+        try {
+            await dispatch(profileData());
+        } catch (e: any) {
+            showResult('error', 'Pengambilan Data Akun', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
+        }
     }
 
     return (
@@ -107,6 +121,20 @@ export default function Header() {
                     </ul>
                 </nav>
             </aside>
+            {modal && (
+                <ModalAlert
+                    isOpen={!!modal}
+                    onClose={closeModal}
+                    onConfirm={confirmModal}
+                    type={modal.type}
+                    title={modal.title}
+                    message={modal.message}
+                    confirmText={modal.confirmText}
+                    cancelText={modal.cancelText}
+                    style_message={"text-base "}
+                    style_title={"text-xl font-semibold mb-0"}
+                />
+            )}
         </>
     )
 }

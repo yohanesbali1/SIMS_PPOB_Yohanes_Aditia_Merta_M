@@ -54,7 +54,8 @@ export default function FormAccount(payload: any) {
             setCanEdit(false);
         } catch (e: any) {
             setBusy(false);
-            showResult('error', 'Top-up Failed', e.message);
+            showResult('error', 'Perubahan Data Diri', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
+
         }
     }
     return (

@@ -31,12 +31,12 @@ export const useModalAlert = () => {
         setModal({ type: 'loading', title, message });
     };
 
-    const showResult = (type: 'success' | 'error', title: string, message: string, confirmText?: string) => {
+    const showResult = (type: 'success' | 'error', title: string, message: string, confirmText?: any) => {
         return new Promise<boolean>((resolve) => {
             setModal({
                 type, title, message,
                 confirmText,
-                resolve
+                resolve: confirmText ? resolve : undefined
             });
         });
         // setTimeout(() => setModal(null), 1500); 

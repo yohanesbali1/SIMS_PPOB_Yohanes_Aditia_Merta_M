@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import { profileUpdateImage } from "../store/reducers/auth/auth.action";
 import ModalAlert from "./modal";
 import { useModalAlert } from "../hook/useModalAlert";
+import { useToast } from "../hook/useToast";
+import Toast from "./toast";
 
 export default function Avatar() {
     const { data_user } = useSelector((state: any) => state.auth);
@@ -21,6 +23,7 @@ export default function Avatar() {
     const isAccountRoute = location.pathname === "/account";
     const fileInputRef = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch<any>();
+    const { toasts, showToast, removeToast } = useToast();
 
     useEffect(() => {
         if (data_user) set_name(`${data_user.first_name} ${data_user.last_name}`);
@@ -36,7 +39,10 @@ export default function Avatar() {
         if (file) {
             const maxSize = 100 * 1024; // 100 KB
             if (file.size > maxSize) {
-                alert("Ukuran gambar maksimal 100 KB.");
+                showToast("Ukuran gambar maksimal 100 KB.", {
+                    title: "",
+                    type: "error",
+                })
                 return;
             }
             UploadImage(file);
@@ -50,9 +56,9 @@ export default function Avatar() {
                 file: image
             }
             await dispatch(profileUpdateImage(payload));
-            await showResult('success', 'Upload Gambar Berhasil', '', 'Kembali ke beranda');
+            await showResult('success', 'Upload Gambar', '', 'Kembali ke beranda');
         } catch (e: any) {
-            showResult('error', 'Top-up Failed', e?.message || "Terjadi kesalahan");
+            showResult('error', 'Upload Gambar', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
         }
     };
 
@@ -103,6 +109,11 @@ export default function Avatar() {
                     style_title={"text-xl font-semibold mb-0"}
                 />
             )}
+            <div className="fixed bottom-6 left-6 z-50 flex flex-col items-end">
+                {toasts.map(toast => (
+                    <Toast key={toast.id} {...toast} onClose={() => removeToast(toast.id)} />
+                ))}
+            </div>
         </>
     );
 }

@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
-import Layout_1 from "../../components/layput/layput_1";
+import Layout_1 from "../../components/layout/layout_1";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { menuService } from "../../store/reducers/serives/service.action";
 import FormService from "./form";
 import { Helmet } from "react-helmet";
+import ModalAlert from "../../components/modal";
+import { useModalAlert } from "../../hook/useModalAlert";
 
 export default function Service() {
     const { service } = useParams<any>();
     const dispatch = useDispatch<any>();
     const { menu_service } = useSelector((state: any) => state.service);
     const [data, set_data] = useState<any>(null);
+    const {
+        modal,
+        showConfirm,
+        showLoading,
+        showResult,
+        closeModal,
+        confirmModal,
+    } = useModalAlert();
 
     useEffect(() => {
         getData();
@@ -26,6 +36,7 @@ export default function Service() {
         try {
             await dispatch(menuService());
         } catch (e: any) {
+            showResult('error', 'Pengambilan Data Akun', e?.message || "Terjadi kesalahan", 'Kembali ke beranda');
         }
     }
 
@@ -50,6 +61,20 @@ export default function Service() {
                 </div>
 
             </Layout_1>
+            {modal && (
+                <ModalAlert
+                    isOpen={!!modal}
+                    onClose={closeModal}
+                    onConfirm={confirmModal}
+                    type={modal.type}
+                    title={modal.title}
+                    message={modal.message}
+                    confirmText={modal.confirmText}
+                    cancelText={modal.cancelText}
+                    style_message={"text-base "}
+                    style_title={"text-xl font-semibold mb-0"}
+                />
+            )}
         </>
     )
 }

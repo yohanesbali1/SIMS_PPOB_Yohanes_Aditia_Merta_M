@@ -1,6 +1,6 @@
 
 import { Helmet } from 'react-helmet';
-import Layout_1 from '../../components/layput/layput_1';
+import Layout_1 from '../../components/layout/layout_1';
 import Banner from './banner';
 import MenuDashboard from './menu';
 

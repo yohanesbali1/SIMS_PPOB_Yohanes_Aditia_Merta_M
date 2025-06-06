@@ -1,9 +1,19 @@
 import axios, { AxiosInstance } from "axios";
 import Cookies from "js-cookie";
+import { decryptWithExpiry } from "../hook/useCript";
 
 
 export default function apiClient(): AxiosInstance {
-    const token: string | undefined = Cookies.get("token");
+    // const token: string | undefined = Cookies.get("token");
+    let token = "";
+    const res: any = localStorage.getItem('token_enc');
+    if (res) {
+        const data_encpt: any = decryptWithExpiry(res);
+        if (!data_encpt.expired) {
+            const data = JSON.parse(data_encpt.data);
+            token = data.token;
+        }
+    }
     const axiosInstance = axios.create({
         baseURL: process.env.REACT_APP_BASE_URL,
         responseType: "json",

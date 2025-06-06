@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/header';
 import Login from './pages/auth/login/page';
 import Dashboard from './pages/home/page';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Register from './pages/auth/register/page';
@@ -13,11 +13,12 @@ import Service from './pages/service/page';
 import Account from './pages/akun/page';
 import ErrorPage from './pages/error';
 import ErrorBoundary from './components/errorBoundary';
+import { decryptWithExpiry } from './hook/useCript';
 
 function App() {
   const history = useHistory();
   const location = useLocation();
-  const token = Cookies.get('token');
+  const [token, setToken] = useState<any>();
 
   useEffect(() => {
     getData();
@@ -25,6 +26,14 @@ function App() {
 
   const getData = async () => {
     try {
+      const res: any = localStorage.getItem('token_enc');
+      var token = null;
+      if (res) {
+        const data_encpt: any = decryptWithExpiry(res);
+        const data = JSON.parse(data_encpt.data);
+        token = data.token;
+      }
+      setToken(token);
       if (!token) {
         if (['/register'].includes(location.pathname)) {
           return true;

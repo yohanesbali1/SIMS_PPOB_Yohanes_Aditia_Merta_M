@@ -17,3 +17,14 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
+
+:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+
+.ring,
+.ring-offset,
+.ring-inset {
+    box-shadow: none !important;
+}

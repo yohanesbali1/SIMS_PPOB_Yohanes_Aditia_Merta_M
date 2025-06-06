@@ -111,7 +111,7 @@ export default function ListData() {
                     message={modal.message}
                     confirmText={modal.confirmText}
                     cancelText={modal.cancelText}
-                    style_message={"hidden "}
+                    style_message={"text-base "}
                     style_title={"text-xl font-regular mb-1"}
                 />
             )}

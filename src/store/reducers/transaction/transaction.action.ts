@@ -3,7 +3,8 @@ import types from './transaction.type';
 import apiClient from '../../../helper/apiConfig';
 export const topupData = (payload: any) => async (dispatch: Dispatch<any>) => {
     try {
-        await apiClient().post(`/topup`, payload);
+        const response = await apiClient().post(`/topup`, payload);
+        dispatch({ type: types.BALANCE_DATA, payload: response.data.data });
         return true;
     } catch (e: any) {
         throw e.response.data;
@@ -22,6 +23,7 @@ export const historyData = (payload: any) => async (dispatch: Dispatch<any>) => 
 export const transactionData = (payload: any) => async (dispatch: Dispatch<any>) => {
     try {
         await apiClient().post(`/transaction`, payload);
+        dispatch(balanceData());
     } catch (e: any) {
         throw e.response.data;
     }

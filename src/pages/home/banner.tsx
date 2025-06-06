@@ -39,11 +39,7 @@ export default function Banner() {
     }, [])
 
     const getData = async () => {
-        try {
-            await dispatch(bannerService());
-        } catch (e: any) {
-            showResult('error', 'Top-up Failed', e?.message || "Terjadi kesalahan");
-        }
+        await dispatch(bannerService());
     }
 
     const checkScrollPosition = () => {

@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import Layout_1 from "../../components/layput/layput_1";
+import Layout_1 from "../../components/layout/layout_1";
 import FormTopUp from "./form";
 
 export default function TopUp() {

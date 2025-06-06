@@ -12,6 +12,7 @@ import { format_number, formatRupiah, parseRupiahToNumber } from "../../helper/h
 
 interface topupForm {
     top_up_amount: number;
+    transaction_type: string
 }
 export default function FormTopUp() {
     const dispatch = useDispatch<any>();
@@ -41,9 +42,14 @@ export default function FormTopUp() {
 
     const schema = yup.object().shape({
         top_up_amount: yup.number().min(10000, 'Minimal top up adalah 10.000').max(1000000).required('email wajib diisi'),
+        transaction_type: yup.string().required('wajib diisi'),
     })
     const { reset, handleSubmit, getValues, setValue, watch, formState: { errors } } = useForm<topupForm>({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            top_up_amount: 0,
+            transaction_type: 'TOPUP'
+        }
     })
 
 

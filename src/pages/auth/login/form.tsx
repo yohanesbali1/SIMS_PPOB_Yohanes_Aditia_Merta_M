@@ -30,7 +30,7 @@ export default function FormLogin() {
     const { toasts, showToast, removeToast } = useToast();
 
     const schema = yup.object().shape({
-        email: yup.string().email().required('email wajib diisi'),
+        email: yup.string().email('email tidak valid').required('email wajib diisi'),
         password: yup.string().required('password wajib diisi'),
     })
     const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
@@ -63,17 +63,17 @@ export default function FormLogin() {
         <>
             <form action="" autoComplete="off" autoCorrect="off" onSubmit={handleSubmit(onSubmit)} className="mt-4">
                 <div className="mb-3">
-                    <FormInput icon="fa fa-user" register={register("email")} type="email" errors={errors?.email} placeholder="masukan email anda" />
+                    <FormInput icon="fa fa-user" disabled={busy} register={register("email")} type="email" errors={errors?.email} placeholder="masukan email anda" />
                     <p className="text-red-500 text-xs">{errors.email?.message}</p>
                 </div>
                 <div className="mb-3">
-                    <FormInput icon="fa fa-key" register={register("password")} icon_passowrd="fa fa-eye" type={show ? "text" : "password"} errors={errors?.password} placeholder="masukan password anda" >
+                    <FormInput icon="fa fa-key" disabled={busy} register={register("password")} icon_passowrd="fa fa-eye" type={show ? "text" : "password"} errors={errors?.password} placeholder="masukan password anda" >
                         <span className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={() => setShow(!show)} ><i className={`${show ? "fa fa-eye" : "fa fa-eye-slash"} text-gray-400 text-sm`}></i></span>
                     </FormInput>
                     <p className="text-red-500 text-xs">{errors.password?.message}</p>
                 </div>
                 <div className="mt-7">
-                    <button type="submit" className="bg-primary text-white py-3 px-4 rounded-sm w-full">Login</button>
+                    <button type="submit" disabled={busy} className="bg-primary text-white py-3 px-4 rounded-sm w-full">Login</button>
                 </div>
             </form>
             <div className="fixed bottom-6 left-6 z-50 flex flex-col items-end">
